@@ -25,6 +25,7 @@ public:
   };
 
   Grid(std::vector<int> &grid);
+  std::vector<Cell> cells{};
   bool checkCell(int index);
   Cell getCell(int index);
   ~Grid();
@@ -34,5 +35,4 @@ private:
   int getNonet(int index);
   int getNonetStart(int nonet);
   bool checkNonet(int index);
-  std::vector<Cell> _cells{};
 };

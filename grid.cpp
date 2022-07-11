@@ -12,11 +12,11 @@ void Grid::initGrid(std::vector<int> &grid) {
     int col = i % 9;
     int index = row * 9 + col;
     if (value != 0) {
-      _cells.push_back(Cell(value, index, true));
+      cells.push_back(Cell(value, index, true));
     } else {
       int index = row * 9 + col;
       value = 0;
-      _cells.push_back(Cell(value, index, false));
+      cells.push_back(Cell(value, index, false));
     }
   }
 }
@@ -40,17 +40,15 @@ int Grid::getNonetStart(int nonet) {
   return nonetStart;
 }
 
-Grid::Cell Grid::getCell(int index) { return _cells[index]; }
-
 bool Grid::checkNonet(int index) {
   int nonet = getNonet(index);
   int startIndex = getNonetStart(nonet);
-  std::set<int> nonetValues{_cells[index].value};
+  std::set<int> nonetValues{cells[index].value};
   std::cout << index << std::endl;
   for (int i{0}; i < 3; i++) {
     for (int j{0}; j < 3; j++) {
       int currentIndex = startIndex + (i * 9) + j;
-      int value = _cells[currentIndex].value;
+      int value = cells[currentIndex].value;
       std::cout << " " << value << " ";
     }
     std::cout << std::endl;

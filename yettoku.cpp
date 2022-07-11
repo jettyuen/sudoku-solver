@@ -18,6 +18,9 @@ bool Yettoku::solve(Grid grid) {
   std::cout << "Yettoku::solve()" << std::endl;
   updatePossibilities(grid);
   for (int i{0}; i < 81; i += 3) {
+    if (i % 9 == 0) {
+      i += 18;
+    }
     _grid->checkCell(i);
   }
   return true;
@@ -27,7 +30,7 @@ void Yettoku::printBoard() {
   for (int i = 0; i < 9; i++) {
     for (int j = 0; j < 9; j++) {
       int index = i * 9 + j;
-      int value = _grid->getCell(index).value;
+      int value = _grid->cells[index].value;
       if (value > 9) {
         std::cout << value << " ";
       } else {
