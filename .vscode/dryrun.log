@@ -1,0 +1,8 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/yettjohan/Projects/soduku-solver'
+g++ -g -Wall -Werror -std=c++20 -c yettoku.cpp
+g++ -g -Wall -Werror -std=c++20 -c grid.cpp
+g++ -g -Wall -Werror -std=c++20 -c main.cpp 
+g++ -g -Wall -Werror -std=c++20 -o yettoku yettoku.o grid.o main.o 
+make: Leaving directory `/Users/yettjohan/Projects/soduku-solver'
+ 
