@@ -1,5 +1,4 @@
 
-
 CFLAGS = -g -Wall -Werror -std=c++20
 CC = g++
 

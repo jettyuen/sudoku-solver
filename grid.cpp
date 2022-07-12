@@ -2,28 +2,21 @@
 #include <iostream>
 
 Grid::Grid(std::vector<int> &grid) { initGrid(grid); }
-
 Grid::~Grid() {}
-
 void Grid::initGrid(std::vector<int> &grid) {
   for (int i{0}; i < 81; i++) {
     int value = grid[i];
     int row = i / 9;
     int col = i % 9;
     int index = row * 9 + col;
-    if (value != 0) {
-      cells.push_back(Cell(value, index, true));
-    } else {
-      int index = row * 9 + col;
-      value = 0;
-      cells.push_back(Cell(value, index, false));
+    Cell cell{value, {}};
+    cellsByIndex[index] = cell;
+    if (value == 0) {
+      for (int j{1}; j < 10; j++) {
+        cellsByIndex[index].possibilities.insert(j);
+      }
     }
   }
-}
-
-void fixCell(Grid::Cell &cell, int newValue) {
-  cell.isFixed = true;
-  cell.value = newValue;
 }
 
 int Grid::getNonet(int index) {
@@ -40,21 +33,56 @@ int Grid::getNonetStart(int nonet) {
   return nonetStart;
 }
 
-bool Grid::checkNonet(int index) {
+void Grid::checkNonet(int index) {
   int nonet = getNonet(index);
   int startIndex = getNonetStart(nonet);
-  std::set<int> nonetValues{cells[index].value};
-  std::cout << index << std::endl;
+  Cell cell = cellsByIndex[index];
   for (int i{0}; i < 3; i++) {
     for (int j{0}; j < 3; j++) {
       int currentIndex = startIndex + (i * 9) + j;
-      int value = cells[currentIndex].value;
-      std::cout << " " << value << " ";
+      int value = cellsByIndex[currentIndex].value;
+      if (value != 0) {
+        cellsByIndex[index].possibilities.erase(value);
+      }
     }
-    std::cout << std::endl;
   }
   // DEBUG:
-  return true;
+}
+void Grid::checkRow(int index) {
+  Cell cell = cellsByIndex[index];
+  for (int i{0}; i < 9; i++) {
+    int currentIndex = (index / 9) * 9 + i;
+    int value = cellsByIndex[currentIndex].value;
+    if (value != 0) {
+      cellsByIndex[index].possibilities.erase(value);
+    }
+  }
+  // DEBUG:
+}
+void Grid::checkColumn(int index) {
+  Cell cell = cellsByIndex[index];
+  for (int i{0}; i < 9; i++) {
+    int currentIndex = (i * 9) + (index % 9);
+    int value = cellsByIndex[currentIndex].value;
+    if (value != 0) {
+      cellsByIndex[index].possibilities.erase(value);
+    }
+  }
+  // DEBUG:
+}
+void Grid::updatePossibilities(int index) {
+  checkNonet(index);
+  checkRow(index);
+  checkColumn(index);
 }
 
-bool Grid::checkCell(int index) { return checkNonet(index); }
+void Grid::printPossibilities(int index) {
+  Cell cell = cellsByIndex[index];
+  auto start = cell.possibilities.begin();
+
+  while (start != cell.possibilities.end()) {
+    std::cout << " " << *start << " ";
+    start++;
+  }
+  std::cout << std::endl;
+}

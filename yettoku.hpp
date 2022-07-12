@@ -10,8 +10,7 @@ public:
   void printBoard();
 
 private:
-  bool solve(Grid grid);
-  void updatePossibilities(Grid &grid);
-
   Grid *_grid;
+
+  void solve(Grid grid, int index);
 };
