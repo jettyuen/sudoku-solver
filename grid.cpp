@@ -46,8 +46,8 @@ void Grid::checkNonet(int index) {
       }
     }
   }
-  // DEBUG:
 }
+
 void Grid::checkRow(int index) {
   Cell cell = cellsByIndex[index];
   for (int i{0}; i < 9; i++) {
@@ -57,8 +57,8 @@ void Grid::checkRow(int index) {
       cellsByIndex[index].possibilities.erase(value);
     }
   }
-  // DEBUG:
 }
+
 void Grid::checkColumn(int index) {
   Cell cell = cellsByIndex[index];
   for (int i{0}; i < 9; i++) {
@@ -68,8 +68,8 @@ void Grid::checkColumn(int index) {
       cellsByIndex[index].possibilities.erase(value);
     }
   }
-  // DEBUG:
 }
+
 void Grid::updatePossibilities(int index) {
   checkNonet(index);
   checkRow(index);
